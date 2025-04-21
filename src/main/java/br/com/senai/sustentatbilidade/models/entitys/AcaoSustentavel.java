@@ -32,6 +32,6 @@ public class AcaoSustentavel {
     @Temporal(value = TemporalType.DATE)
     private LocalDate dataRealizacao;
 
-    @Column(nullable = false)
+    @Column
     private String responsavel;
 }
