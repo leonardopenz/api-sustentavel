@@ -1,4 +1,4 @@
-package br.com.senai.sustentatbilidade.models.repositorys;
+package br.com.senai.sustentatbilidade.repositorys;
 
 import br.com.senai.sustentatbilidade.models.entitys.AcaoSustentavel;
 import org.springframework.data.jpa.repository.JpaRepository;
