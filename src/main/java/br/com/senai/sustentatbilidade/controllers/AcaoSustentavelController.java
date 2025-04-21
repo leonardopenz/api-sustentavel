@@ -3,6 +3,7 @@ package br.com.senai.sustentatbilidade.controllers;
 import br.com.senai.sustentatbilidade.models.dtos.AcaoSustentavelRequest;
 import br.com.senai.sustentatbilidade.models.dtos.AcaoSustentavelResponse;
 import br.com.senai.sustentatbilidade.models.entitys.AcaoSustentavel;
+import br.com.senai.sustentatbilidade.models.enums.CategoriaAcao;
 import br.com.senai.sustentatbilidade.services.AcaoSustentavelService;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
@@ -41,8 +42,25 @@ public class AcaoSustentavelController {
         }else {
             return ResponseEntity.notFound().build();
         }
-
     }
+
+    @GetMapping("/categoria")
+    public ResponseEntity<List<AcaoSustentavelResponse>> listarPorCategoria(@RequestParam("tipo") String tipo) {
+        try {
+            CategoriaAcao categoria = CategoriaAcao.valueOf(tipo.toUpperCase());
+            List<AcaoSustentavel> acoes = acaoSustentavelService.findByCategoria(categoria);
+
+            List<AcaoSustentavelResponse> response = acoes.stream()
+                    .map(acao -> modelMapper.map(acao, AcaoSustentavelResponse.class))
+                    .collect(Collectors.toList());
+
+            return response.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(response);
+
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+
 
     @PostMapping
     public ResponseEntity<AcaoSustentavelResponse> create(@RequestBody @Valid AcaoSustentavelRequest acaoDTO) throws Exception {

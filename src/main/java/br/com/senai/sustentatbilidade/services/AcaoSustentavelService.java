@@ -1,6 +1,7 @@
 package br.com.senai.sustentatbilidade.services;
 
 import br.com.senai.sustentatbilidade.models.entitys.AcaoSustentavel;
+import br.com.senai.sustentatbilidade.models.enums.CategoriaAcao;
 import br.com.senai.sustentatbilidade.repositorys.AcaoSustentatvelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,11 @@ public class AcaoSustentavelService {
     public AcaoSustentavel findAcaoById(Long id){
         return acaoSustentavelRepository.findById(id).orElseThrow();
     }
+
+    public List<AcaoSustentavel> findByCategoria(CategoriaAcao categoria) {
+        return acaoSustentavelRepository.findByCategoria(categoria);
+    }
+
 
     public AcaoSustentavel create(AcaoSustentavel acaoSustentavel){
         return acaoSustentavelRepository.save(acaoSustentavel);
