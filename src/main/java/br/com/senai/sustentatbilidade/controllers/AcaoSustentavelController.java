@@ -9,6 +9,8 @@ import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,7 +18,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/acoes")
+@RequestMapping("/api/acoes")
+@EnableMethodSecurity(prePostEnabled = true)
 public class AcaoSustentavelController {
 
     @Autowired
@@ -25,6 +28,7 @@ public class AcaoSustentavelController {
     @Autowired
     private ModelMapper modelMapper;
 
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @GetMapping
     public ResponseEntity<List<AcaoSustentavelResponse>> listAll(){
         List<AcaoSustentavelResponse> acoes = this.acaoSustentavelService.findAllAcaoSustentavel().stream()
@@ -44,6 +48,7 @@ public class AcaoSustentavelController {
         }
     }
 
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @GetMapping("/categoria")
     public ResponseEntity<List<AcaoSustentavelResponse>> listarPorCategoria(@RequestParam("tipo") String tipo) {
         try {
@@ -61,7 +66,7 @@ public class AcaoSustentavelController {
         }
     }
 
-
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<AcaoSustentavelResponse> create(@RequestBody @Valid AcaoSustentavelRequest acaoDTO) throws Exception {
         AcaoSustentavel acao = modelMapper.map(acaoDTO, AcaoSustentavel.class);
@@ -70,6 +75,7 @@ public class AcaoSustentavelController {
         return ResponseEntity.ok(createdAcaoDTO);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<AcaoSustentavelResponse> update(@PathVariable Long id, @RequestBody AcaoSustentavelRequest acaoDTO) throws Exception {
         AcaoSustentavel acao = modelMapper.map(acaoDTO, AcaoSustentavel.class);
@@ -78,6 +84,7 @@ public class AcaoSustentavelController {
         return ResponseEntity.ok(updateAcaoDTO);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id){
         this.acaoSustentavelService.delete(id);
