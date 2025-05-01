@@ -1,5 +1,6 @@
 package br.com.senai.sustentatbilidade.configurations.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -14,9 +15,14 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class WebSecurityConfig {
 
+    @Autowired
+    private CustomAuthenticationEntryPoint authenticationEntryPoint;
+
+    @Autowired
+    private CustomAccessDeniedHandler accessDeniedHandler;
+
     @Bean
     public UserDetailsService userDetailsService() {
-        // Criando usuários em memória
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
 
         manager.createUser(
@@ -45,7 +51,12 @@ public class WebSecurityConfig {
                         .requestMatchers("/api/acoes/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
+                .exceptionHandling(exception -> exception
+                        .authenticationEntryPoint(authenticationEntryPoint)
+                        .accessDeniedHandler(accessDeniedHandler))
                 .httpBasic(Customizer.withDefaults()); // Ativa autenticação via Basic Auth
+
+
 
         return http.build();
     }
