@@ -21,26 +21,6 @@ public class WebSecurityConfig {
     @Autowired
     private CustomAccessDeniedHandler accessDeniedHandler;
 
-    @Bean
-    public UserDetailsService userDetailsService() {
-        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-
-        manager.createUser(
-                User.withUsername("admin")
-                        .password("{noop}admin123") // {noop} significa que a senha está em texto plano
-                        .roles("ADMIN")
-                        .build()
-        );
-
-        manager.createUser(
-                User.withUsername("user")
-                        .password("{noop}user123")
-                        .roles("USER")
-                        .build()
-        );
-
-        return manager;
-    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -50,11 +30,8 @@ public class WebSecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/acoes/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers("/api/acoes/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
-                )
-                .exceptionHandling(exception -> exception
-                        .authenticationEntryPoint(authenticationEntryPoint)
-                        .accessDeniedHandler(accessDeniedHandler))
-                .httpBasic(Customizer.withDefaults()); // Ativa autenticação via Basic Auth
+                );
+
 
 
 
