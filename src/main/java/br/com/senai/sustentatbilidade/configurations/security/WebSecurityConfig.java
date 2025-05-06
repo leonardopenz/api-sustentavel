@@ -33,9 +33,11 @@ public class WebSecurityConfig {
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login", "/register").permitAll()
+                        .requestMatchers("/auth/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/acoes/**").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers("/api/acoes/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/acoes/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/acoes/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/acoes/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
