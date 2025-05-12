@@ -28,7 +28,7 @@ Uma API REST desenvolvida com **Spring Boot** para cadastrar, consultar, atualiz
 - ✅ Tratamento de exceções com mensagens amigáveis
 - ✅ Controle de versão via Git
 
-
+---
 
 ## 🔗 Exemplos de Endpoints
 
@@ -38,19 +38,6 @@ Uma API REST desenvolvida com **Spring Boot** para cadastrar, consultar, atualiz
 - `POST /acoes` – Cria uma nova ação
 - `PUT /acoes/{id}` – Atualiza uma ação existente
 - `DELETE /acoes/{id}` – Remove uma ação
-
----
-
-## ✨ Contribuições
-
-Contribuições são bem-vindas!  
-Se você tiver sugestões de melhorias, encontrar bugs ou quiser adicionar novos recursos, fique à vontade para abrir uma *issue* ou enviar um *pull request*.
-
-1. Fork o projeto
-2. Crie uma branch para sua feature: `git checkout -b minha-feature`
-3. Faça o commit das suas alterações: `git commit -m 'feat: minha nova feature'`
-4. Faça o push para a sua branch: `git push origin minha-feature`
-5. Abra um Pull Request
 
 ---
 
