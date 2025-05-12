@@ -6,13 +6,13 @@ Uma API REST desenvolvida com **Spring Boot** para cadastrar, consultar, atualiz
 
 ## 🚀 Tecnologias Utilizadas
 
-- Java 17+
+- Java
 - Spring Boot
 - Spring Data JPA
-- Bean Validation (Jakarta)
+- Bean Validation
 - ModelMapper
-- H2 / PostgreSQL (configurável)
-- Git (controle de versão)
+- PostgreSQL 
+- Git 
 
 ---
 
@@ -58,5 +58,4 @@ Se você tiver sugestões de melhorias, encontrar bugs ou quiser adicionar novos
 
 **Leonardo Penz**  
 📧 leonardopenz.ti@gmail.com  
-🔗 [GitHub](https://github.com/leonardopenz)  
 🔗 [LinkedIn](https://www.linkedin.com/in/leonardo-penz/)
